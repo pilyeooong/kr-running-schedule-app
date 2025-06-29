@@ -1,0 +1,6 @@
+{
+  "expo": {
+    "scheme": "claude-code-tutorial",
+    "platforms": ["ios", "android", "web"]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "claude-code-tutorial",
-    "slug": "claude-code-tutorial",
+    "name": "kr-running-schedule-app",
+    "slug": "kr-running-schedule-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
