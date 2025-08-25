@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-nativ
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { EventCard } from './components/EventCard';
 import { MonthFilter } from './components/MonthFilter';
+import { AdBanner } from './components/AdBanner';
+import { AppBanner } from './components/AppBanner';
 import { RunningEvent } from './types';
 import { fetchMarathonEvents, transformMarathonToRunningEvent } from './services/marathonApi';
 
@@ -23,7 +25,7 @@ export default function App() {
     try {
       setLoading(true);
       const marathonEvents = await fetchMarathonEvents();
-      const runningEvents = marathonEvents.map(transformMarathonToRunningEvent);
+      const runningEvents = marathonEvents.map((event, index) => transformMarathonToRunningEvent(event, index));
       setAllEvents(runningEvents);
     } catch (err) {
       setError('마라톤 대회 정보를 불러오는데 실패했습니다.');
@@ -93,9 +95,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-          <View style={styles.header}>
-            <Text style={styles.title}>러닝 대회 일정</Text>
-          </View>
+          <AppBanner />
           <View style={styles.centerContainer}>
             <ActivityIndicator size="large" color="#2196F3" />
             <Text style={styles.loadingText}>대회 정보를 불러오는 중...</Text>
@@ -110,9 +110,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-          <View style={styles.header}>
-            <Text style={styles.title}>러닝 대회 일정</Text>
-          </View>
+          <AppBanner />
           <View style={styles.centerContainer}>
             <Text style={styles.errorText}>{error}</Text>
           </View>
@@ -125,10 +123,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-        <View style={styles.header}>
-          <Text style={styles.title}>러닝 대회 일정</Text>
-          <Text style={styles.subtitle}>{filteredEvents.length}개의 대회</Text>
-        </View>
+        <AppBanner />
         <MonthFilter
           selectedMonth={selectedMonth}
           onMonthSelect={setSelectedMonth}
@@ -143,6 +138,7 @@ export default function App() {
           showsVerticalScrollIndicator={false}
           onScrollToIndexFailed={() => {}}
         />
+        <AdBanner />
         <StatusBar style="auto" />
       </SafeAreaView>
     </SafeAreaProvider>

@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "kr-running-schedule-app",
+    "name": "한국 러닝 대회 일정",
     "slug": "kr-running-schedule-app",
     "version": "1.0.0",
+    "owner": "pilyeooong",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -10,20 +11,35 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2196F3"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.pilyeooong.krrunningscheduleapp",
+      "buildNumber": "3",
+      "infoPlist": {
+        "GADApplicationIdentifier": "ca-app-pub-2370970221825852~8890573725"
+      }
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
+      "package": "com.pilyeooong.krrunningscheduleapp",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "91fc1745-8eb3-47ba-81dc-8e710003584f"
+      }
+    },
+    "plugins": [
+      [
+        "react-native-google-mobile-ads",
+        {
+          "ios_app_id": "ca-app-pub-2370970221825852~8890573725"
+        }
+      ]
+    ]
   }
 }

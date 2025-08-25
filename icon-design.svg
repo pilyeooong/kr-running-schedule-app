@@ -1,0 +1,51 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <radialGradient id="bgGradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#42A5F5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1976D2;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="runnerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#E3F2FD;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="512" cy="512" r="480" fill="url(#bgGradient)" stroke="#1565C0" stroke-width="8"/>
+  
+  <!-- Running person silhouette -->
+  <g fill="url(#runnerGradient)" stroke="none">
+    <!-- Head -->
+    <circle cx="480" cy="280" r="60"/>
+    
+    <!-- Body -->
+    <ellipse cx="500" cy="420" rx="45" ry="100"/>
+    
+    <!-- Left arm (back) -->
+    <ellipse cx="420" cy="380" rx="25" ry="80" transform="rotate(-30 420 380)"/>
+    
+    <!-- Right arm (front) -->
+    <ellipse cx="580" cy="360" rx="25" ry="85" transform="rotate(45 580 360)"/>
+    
+    <!-- Left leg (back) -->
+    <ellipse cx="470" cy="580" rx="30" ry="90" transform="rotate(-20 470 580)"/>
+    
+    <!-- Right leg (front, lifted) -->
+    <ellipse cx="540" cy="540" rx="30" ry="90" transform="rotate(25 540 540)"/>
+    
+    <!-- Left foot -->
+    <ellipse cx="450" cy="650" rx="35" ry="15" transform="rotate(-10 450 650)"/>
+    
+    <!-- Right foot (lifted) -->
+    <ellipse cx="580" cy="600" rx="35" ry="15" transform="rotate(30 580 600)"/>
+  </g>
+  
+  <!-- Motion lines to show speed -->
+  <g stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" opacity="0.7" fill="none">
+    <line x1="300" y1="350" x2="250" y2="360"/>
+    <line x1="320" y1="420" x2="270" y2="430"/>
+    <line x1="310" y1="490" x2="260" y2="500"/>
+    <line x1="340" y1="560" x2="290" y2="570"/>
+  </g>
+</svg>
