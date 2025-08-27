@@ -31,7 +31,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
 }
 expoAutolinking.useExpoModules()
 
-rootProject.name = 'kr-running-schedule-app'
+rootProject.name = '한국 러닝 대회 일정'
 
 expoAutolinking.useExpoVersionCatalog()
 

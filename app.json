@@ -16,14 +16,21 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.pilyeooong.krrunningscheduleapp",
-      "buildNumber": "3",
+      "buildNumber": "7",
+      "config": {
+        "usesNonExemptEncryption": false,
+        "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
+      },
       "infoPlist": {
         "GADApplicationIdentifier": "ca-app-pub-2370970221825852~8890573725"
       }
     },
     "android": {
       "package": "com.pilyeooong.krrunningscheduleapp",
-      "versionCode": 2
+      "versionCode": 2,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,7 +44,8 @@
       [
         "react-native-google-mobile-ads",
         {
-          "ios_app_id": "ca-app-pub-2370970221825852~8890573725"
+          "iosAppId": "ca-app-pub-2370970221825852~8890573725",
+          "androidAppId": "ca-app-pub-2370970221825852~8890573725"
         }
       ]
     ]
