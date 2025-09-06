@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, PanResponder, Animated, Dimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { EventCard } from './components/EventCard';
 import { MonthFilter } from './components/MonthFilter';
@@ -9,6 +9,8 @@ import { AppBanner } from './components/AppBanner';
 import { RunningEvent } from './types';
 import { fetchMarathonEvents, transformMarathonToRunningEvent } from './services/marathonApi';
 
+const { width: screenWidth } = Dimensions.get('window');
+
 export default function App() {
   const [allEvents, setAllEvents] = useState<RunningEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +18,7 @@ export default function App() {
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const flatListRef = useRef<FlatList>(null);
+  const slideAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     loadMarathonEvents();
@@ -80,6 +83,64 @@ export default function App() {
     }, 300);
   };
 
+  const animateSlide = (direction: 'left' | 'right', callback: () => void) => {
+    const toValue = direction === 'left' ? -screenWidth : screenWidth;
+    
+    Animated.sequence([
+      Animated.timing(slideAnim, {
+        toValue,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 0,
+        useNativeDriver: true,
+      }),
+    ]).start();
+    
+    // 애니메이션 중간에 월 변경
+    setTimeout(callback, 100);
+  };
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => false,
+    onMoveShouldSetPanResponder: (evt, gestureState) => {
+      const { dx, dy } = gestureState;
+      return Math.abs(dx) > Math.abs(dy) * 2 && Math.abs(dx) > 20;
+    },
+    onPanResponderGrant: () => true,
+    onPanResponderMove: (evt, gestureState) => {
+      // 실시간으로 드래그 따라 이동
+      const { dx } = gestureState;
+      const clampedDx = Math.max(-screenWidth * 0.3, Math.min(screenWidth * 0.3, dx));
+      slideAnim.setValue(clampedDx);
+    },
+    onPanResponderRelease: (evt, gestureState) => {
+      const swipeThreshold = 80;
+      const currentIndex = availableMonths.indexOf(selectedMonth);
+      
+      if (gestureState.dx > swipeThreshold && currentIndex > 0) {
+        // 오른쪽으로 swipe -> 이전 월
+        animateSlide('right', () => {
+          setSelectedMonth(availableMonths[currentIndex - 1]);
+        });
+      } else if (gestureState.dx < -swipeThreshold && currentIndex < availableMonths.length - 1) {
+        // 왼쪽으로 swipe -> 다음 월
+        animateSlide('left', () => {
+          setSelectedMonth(availableMonths[currentIndex + 1]);
+        });
+      } else {
+        // 스와이프가 충분하지 않으면 원래 위치로 복귀
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: true,
+        }).start();
+      }
+    },
+  });
+
   useEffect(() => {
     if (filteredEvents.length > 0 && isInitialLoad) {
       scrollToNearestEvent();
@@ -129,15 +190,26 @@ export default function App() {
           onMonthSelect={setSelectedMonth}
           availableMonths={availableMonths}
         />
-        <FlatList
-          ref={flatListRef}
-          data={filteredEvents}
-          renderItem={renderEventCard}
-          keyExtractor={(item) => item.id}
-          style={styles.list}
-          showsVerticalScrollIndicator={false}
-          onScrollToIndexFailed={() => {}}
-        />
+        <View style={styles.listContainer} {...panResponder.panHandlers}>
+          <Animated.View 
+            style={[
+              styles.animatedContainer,
+              {
+                transform: [{ translateX: slideAnim }]
+              }
+            ]}
+          >
+            <FlatList
+              ref={flatListRef}
+              data={filteredEvents}
+              renderItem={renderEventCard}
+              keyExtractor={(item) => item.id}
+              style={styles.list}
+              showsVerticalScrollIndicator={false}
+              onScrollToIndexFailed={() => {}}
+            />
+          </Animated.View>
+        </View>
         <AdBanner />
         <StatusBar style="auto" />
       </SafeAreaView>
@@ -165,6 +237,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#E3F2FD',
     marginTop: 4,
+  },
+  listContainer: {
+    flex: 1,
+    overflow: 'hidden',
+  },
+  animatedContainer: {
+    flex: 1,
   },
   list: {
     flex: 1,

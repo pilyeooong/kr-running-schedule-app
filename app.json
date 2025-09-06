@@ -2,7 +2,7 @@
   "expo": {
     "name": "한국 러닝 대회 일정",
     "slug": "kr-running-schedule-app",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "owner": "pilyeooong",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.pilyeooong.krrunningscheduleapp",
-      "buildNumber": "8",
+      "buildNumber": "11",
       "config": {
         "usesNonExemptEncryption": false,
         "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.pilyeooong.krrunningscheduleapp",
-      "versionCode": 2,
+      "versionCode": 3,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
       }
