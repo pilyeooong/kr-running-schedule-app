@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.pilyeooong.krrunningscheduleapp",
-      "buildNumber": "12",
+      "buildNumber": "14",
       "config": {
         "usesNonExemptEncryption": false,
         "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.pilyeooong.krrunningscheduleapp",
-      "versionCode": 3,
+      "versionCode": 4,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
       }
