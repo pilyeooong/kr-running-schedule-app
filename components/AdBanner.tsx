@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Platform, Text } from 'react-native';
-import mobileAds, { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+
+// Expo Go 환경에서는 애드몹 모듈을 import하지 않음
+let mobileAds, BannerAd, BannerAdSize, TestIds;
+try {
+  const googleMobileAds = require('react-native-google-mobile-ads');
+  mobileAds = googleMobileAds.default;
+  BannerAd = googleMobileAds.BannerAd;
+  BannerAdSize = googleMobileAds.BannerAdSize;
+  TestIds = googleMobileAds.TestIds;
+} catch (error) {
+  // Expo Go 환경에서는 애드몹 사용 불가
+}
 
 const adUnitId = __DEV__ 
   ? TestIds.BANNER 
