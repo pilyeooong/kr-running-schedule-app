@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.pilyeooong.krrunningscheduleapp",
-      "versionCode": 6,
+      "versionCode": 7,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
       }
