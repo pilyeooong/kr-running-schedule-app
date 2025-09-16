@@ -61,11 +61,6 @@ export const AdBanner: React.FC = () => {
           console.error('Ad failed to load:', error);
         }}
       />
-      {!isAdLoaded && (
-        <Text style={{ color: '#666', fontSize: 12, position: 'absolute' }}>
-          광고 영역 ({__DEV__ ? 'Test' : 'Live'})
-        </Text>
-      )}
     </View>
   );
 };
