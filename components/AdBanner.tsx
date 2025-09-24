@@ -14,11 +14,11 @@ try {
 }
 
 const adUnitId = __DEV__ 
-  ? TestIds.BANNER 
+  ? TestIds?.BANNER 
   : Platform.select({
       ios: 'ca-app-pub-2370970221825852/1956681472',
       android: 'ca-app-pub-2370970221825852/8003215077',
-    }) || TestIds.BANNER;
+    }) || TestIds?.BANNER;
 
 export const AdBanner: React.FC = () => {
   const [isAdLoaded, setIsAdLoaded] = useState(false);
@@ -28,7 +28,6 @@ export const AdBanner: React.FC = () => {
     const initializeAdMob = async () => {
       try {
         await mobileAds().initialize();
-        console.log('AdMob initialized successfully');
         setIsInitialized(true);
       } catch (error) {
         console.error('AdMob initialization failed:', error);
@@ -36,7 +35,11 @@ export const AdBanner: React.FC = () => {
       }
     };
 
-    initializeAdMob();
+    if (mobileAds) {
+      initializeAdMob();
+    } else {
+      setIsInitialized(false);
+    }
   }, []);
 
   // AdMob이 초기화되지 않았으면 로딩 표시
