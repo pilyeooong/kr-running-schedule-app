@@ -307,7 +307,7 @@ PODS:
   - FBLazyVector (0.79.5)
   - fmt (11.0.2)
   - glog (0.3.5)
-  - Google-Mobile-Ads-SDK (12.4.0):
+  - Google-Mobile-Ads-SDK (12.9.0):
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleUserMessagingPlatform (3.0.0)
   - hermes-engine (0.79.5):
@@ -2034,10 +2034,10 @@ PODS:
     - React-logger (= 0.79.5)
     - React-perflogger (= 0.79.5)
     - React-utils (= 0.79.5)
-  - RNGoogleMobileAds (15.4.0):
+  - RNGoogleMobileAds (15.7.0):
     - DoubleConversion
     - glog
-    - Google-Mobile-Ads-SDK (= 12.4.0)
+    - Google-Mobile-Ads-SDK (= 12.9.0)
     - GoogleUserMessagingPlatform (= 3.0.0)
     - hermes-engine
     - RCT-Folly (= 2024.11.18.00)
@@ -2407,7 +2407,7 @@ SPEC CHECKSUMS:
   FBLazyVector: d2a9cd223302b6c9aa4aa34c1a775e9db609eb52
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  Google-Mobile-Ads-SDK: db00a3836f288f94e52114f312b56fe066699d82
+  Google-Mobile-Ads-SDK: 36cce7d8dc1b615145d02491c8bf5640ef854e7c
   GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
   hermes-engine: f03b0e06d3882d71e67e45b073bb827da1a21aae
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
@@ -2473,7 +2473,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: f3e842e6cb5a825b6918a74a38402ba1409411f8
   ReactCodegen: 6cb6e0d0b52471abc883541c76589d1c367c64c7
   ReactCommon: 1ab5451fc5da87c4cc4c3046e19a8054624ca763
-  RNGoogleMobileAds: d5de47632a9c0e46962feaca75fee614d287dd26
+  RNGoogleMobileAds: dc844ce72b48b60354ff06c85feb1377a1a38c89
   RNSVG: 794f269526df9ddc1f79b3d1a202b619df0368e3
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: adb397651e1c00672c12e9495babca70777e411e
