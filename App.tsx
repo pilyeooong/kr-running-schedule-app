@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, FlatList, ActivityIndicator, PanResponder, Anim
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { EventCard } from './components/EventCard';
 import { MonthFilter } from './components/MonthFilter';
+import { YearFilter } from './components/YearFilter';
 import { AdBanner } from './components/AdBanner';
 import { AppBanner } from './components/AppBanner';
 import { RunningEvent } from './types';
@@ -15,6 +16,7 @@ export default function App() {
   const [allEvents, setAllEvents] = useState<RunningEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const flatListRef = useRef<FlatList>(null);
@@ -38,21 +40,75 @@ export default function App() {
     }
   };
 
+  const availableYears = useMemo(() => {
+    const years = new Set<number>();
+    allEvents.forEach(event => {
+      years.add(event.year);
+    });
+    return Array.from(years).sort((a, b) => a - b);
+  }, [allEvents]);
+
+  // 데이터 로드 후 현재 연도가 없으면 가장 가까운 연도 선택
+  useEffect(() => {
+    if (availableYears.length > 0) {
+      const currentYear = new Date().getFullYear();
+      if (availableYears.includes(currentYear)) {
+        setSelectedYear(currentYear);
+      } else {
+        // 현재 연도와 가장 가까운 연도 선택
+        const closestYear = availableYears.reduce((prev, curr) =>
+          Math.abs(curr - currentYear) < Math.abs(prev - currentYear) ? curr : prev
+        );
+        setSelectedYear(closestYear);
+      }
+    }
+  }, [availableYears]);
+
   const availableMonths = useMemo(() => {
     const months = new Set<number>();
-    allEvents.forEach(event => {
-      const eventDate = new Date(event.date);
-      months.add(eventDate.getMonth() + 1);
-    });
+    allEvents
+      .filter(event => event.year === selectedYear)
+      .forEach(event => {
+        const eventDate = new Date(event.date);
+        months.add(eventDate.getMonth() + 1);
+      });
     return Array.from(months).sort((a, b) => a - b);
-  }, [allEvents]);
+  }, [allEvents, selectedYear]);
+
+  // 현재 월이 없으면 가장 가까운 월 선택
+  useEffect(() => {
+    if (availableMonths.length > 0) {
+      const currentMonth = new Date().getMonth() + 1;
+      if (availableMonths.includes(currentMonth)) {
+        setSelectedMonth(currentMonth);
+      } else {
+        // 현재 월과 가장 가까운 월 선택
+        const closestMonth = availableMonths.reduce((prev, curr) =>
+          Math.abs(curr - currentMonth) < Math.abs(prev - currentMonth) ? curr : prev
+        );
+        setSelectedMonth(closestMonth);
+      }
+    }
+  }, [availableMonths]);
 
   const filteredEvents = useMemo(() => {
     return allEvents.filter(event => {
       const eventDate = new Date(event.date);
-      return eventDate.getMonth() + 1 === selectedMonth;
+      return event.year === selectedYear && eventDate.getMonth() + 1 === selectedMonth;
     });
-  }, [allEvents, selectedMonth]);
+  }, [allEvents, selectedYear, selectedMonth]);
+
+  const handleYearSelect = (year: number) => {
+    setSelectedYear(year);
+    // 선택한 년도의 첫 번째 월로 자동 선택
+    const monthsInYear = allEvents
+      .filter(event => event.year === year)
+      .map(event => new Date(event.date).getMonth() + 1);
+    const uniqueMonths = [...new Set(monthsInYear)].sort((a, b) => a - b);
+    if (uniqueMonths.length > 0 && !uniqueMonths.includes(selectedMonth)) {
+      setSelectedMonth(uniqueMonths[0]);
+    }
+  };
 
   const scrollToNearestEvent = () => {
     if (filteredEvents.length === 0) return;
@@ -185,6 +241,11 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
         <AppBanner />
+        <YearFilter
+          selectedYear={selectedYear}
+          onYearSelect={handleYearSelect}
+          availableYears={availableYears}
+        />
         <MonthFilter
           selectedMonth={selectedMonth}
           onMonthSelect={setSelectedMonth}

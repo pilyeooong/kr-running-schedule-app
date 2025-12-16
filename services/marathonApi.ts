@@ -18,6 +18,7 @@ export const fetchMarathonEvents = async (): Promise<MarathonEvent[]> => {
 
 export const transformMarathonToRunningEvent = (event: MarathonEvent, index: number) => ({
   id: `${event.year}-${event.month}-${event.day}-${event.event_name}-${event.location}-${index}`,
+  year: event.year,
   date: `${event.year}-${event.month.toString().padStart(2, '0')}-${event.day.toString().padStart(2, '0')}`,
   name: event.event_name,
   organizer: event.organizer.join(', '),

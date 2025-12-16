@@ -13,6 +13,7 @@ export interface MarathonEvent {
 
 export interface RunningEvent {
   id: string;
+  year: number;
   date: string;
   name: string;
   organizer: string;
