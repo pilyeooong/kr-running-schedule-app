@@ -18,6 +18,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
+  const [monthByYear, setMonthByYear] = useState<Record<number, number>>({}); // 연도별 선택 월 기억
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const flatListRef = useRef<FlatList>(null);
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -101,14 +102,24 @@ export default function App() {
   }, [allEvents, selectedYear, selectedMonth]);
 
   const handleYearSelect = (year: number) => {
+    // 현재 연도의 선택 월 저장
+    setMonthByYear(prev => ({ ...prev, [selectedYear]: selectedMonth }));
+
     setSelectedYear(year);
-    // 선택한 년도의 첫 번째 월로 자동 선택
+
+    // 해당 연도에 저장된 월이 있으면 그 월로, 없으면 첫 번째 월로
     const monthsInYear = allEvents
       .filter(event => event.year === year)
       .map(event => new Date(event.date).getMonth() + 1);
     const uniqueMonths = [...new Set(monthsInYear)].sort((a, b) => a - b);
+
     if (uniqueMonths.length > 0) {
-      setSelectedMonth(uniqueMonths[0]);
+      const savedMonth = monthByYear[year];
+      if (savedMonth && uniqueMonths.includes(savedMonth)) {
+        setSelectedMonth(savedMonth);
+      } else {
+        setSelectedMonth(uniqueMonths[0]);
+      }
     }
   };
 
