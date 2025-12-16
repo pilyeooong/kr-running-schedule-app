@@ -75,9 +75,11 @@ export default function App() {
     return Array.from(months).sort((a, b) => a - b);
   }, [allEvents, selectedYear]);
 
-  // 현재 월이 없으면 가장 가까운 월 선택
+  // 초기 로드 시에만 현재 월 선택 (연도 변경 시에는 handleYearSelect에서 처리)
+  const isInitialMonthSet = useRef(false);
   useEffect(() => {
-    if (availableMonths.length > 0) {
+    if (availableMonths.length > 0 && !isInitialMonthSet.current) {
+      isInitialMonthSet.current = true;
       const currentMonth = new Date().getMonth() + 1;
       if (availableMonths.includes(currentMonth)) {
         setSelectedMonth(currentMonth);
@@ -105,7 +107,7 @@ export default function App() {
       .filter(event => event.year === year)
       .map(event => new Date(event.date).getMonth() + 1);
     const uniqueMonths = [...new Set(monthsInYear)].sort((a, b) => a - b);
-    if (uniqueMonths.length > 0 && !uniqueMonths.includes(selectedMonth)) {
+    if (uniqueMonths.length > 0) {
       setSelectedMonth(uniqueMonths[0]);
     }
   };
