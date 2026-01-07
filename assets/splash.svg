@@ -11,8 +11,8 @@
   </g>
 
   <!-- 앱 이름 -->
-  <text x="642" y="1550" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" fill="white">
-    한국 러닝 대회 일정
+  <text x="642" y="1550" font-family="Arial, sans-serif" font-size="96" font-weight="bold" text-anchor="middle" fill="white">
+    러닝 캘린더
   </text>
 
   <!-- 부제 -->

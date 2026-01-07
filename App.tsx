@@ -188,17 +188,52 @@ export default function App() {
     onPanResponderRelease: (evt, gestureState) => {
       const swipeThreshold = 80;
       const currentIndex = availableMonths.indexOf(selectedMonth);
-      
-      if (gestureState.dx > swipeThreshold && currentIndex > 0) {
+      const currentYearIndex = availableYears.indexOf(selectedYear);
+
+      if (gestureState.dx > swipeThreshold) {
         // 오른쪽으로 swipe -> 이전 월
-        animateSlide('right', () => {
-          setSelectedMonth(availableMonths[currentIndex - 1]);
-        });
-      } else if (gestureState.dx < -swipeThreshold && currentIndex < availableMonths.length - 1) {
+        if (currentIndex > 0) {
+          animateSlide('right', () => {
+            setSelectedMonth(availableMonths[currentIndex - 1]);
+          });
+        } else if (currentYearIndex > 0) {
+          // 이전 연도의 마지막 월로 이동
+          const prevYear = availableYears[currentYearIndex - 1];
+          const prevYearMonths = allEvents
+            .filter(event => event.year === prevYear)
+            .map(event => new Date(event.date).getMonth() + 1);
+          const uniquePrevMonths = [...new Set(prevYearMonths)].sort((a, b) => a - b);
+          if (uniquePrevMonths.length > 0) {
+            animateSlide('right', () => {
+              setSelectedYear(prevYear);
+              setSelectedMonth(uniquePrevMonths[uniquePrevMonths.length - 1]);
+            });
+          }
+        } else {
+          Animated.timing(slideAnim, { toValue: 0, duration: 200, useNativeDriver: true }).start();
+        }
+      } else if (gestureState.dx < -swipeThreshold) {
         // 왼쪽으로 swipe -> 다음 월
-        animateSlide('left', () => {
-          setSelectedMonth(availableMonths[currentIndex + 1]);
-        });
+        if (currentIndex < availableMonths.length - 1) {
+          animateSlide('left', () => {
+            setSelectedMonth(availableMonths[currentIndex + 1]);
+          });
+        } else if (currentYearIndex < availableYears.length - 1) {
+          // 다음 연도의 첫 번째 월로 이동
+          const nextYear = availableYears[currentYearIndex + 1];
+          const nextYearMonths = allEvents
+            .filter(event => event.year === nextYear)
+            .map(event => new Date(event.date).getMonth() + 1);
+          const uniqueNextMonths = [...new Set(nextYearMonths)].sort((a, b) => a - b);
+          if (uniqueNextMonths.length > 0) {
+            animateSlide('left', () => {
+              setSelectedYear(nextYear);
+              setSelectedMonth(uniqueNextMonths[0]);
+            });
+          }
+        } else {
+          Animated.timing(slideAnim, { toValue: 0, duration: 200, useNativeDriver: true }).start();
+        }
       } else {
         // 스와이프가 충분하지 않으면 원래 위치로 복귀
         Animated.timing(slideAnim, {

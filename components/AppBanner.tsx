@@ -7,10 +7,7 @@ export const AppBanner: React.FC = () => {
     <View style={styles.banner}>
       <View style={styles.content}>
         <RunnerIcon />
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>한국 러닝 대회 일정</Text>
-          <Text style={styles.subtitle}>{new Date().getMonth() + 1}월 대회 일정</Text>
-        </View>
+        <Text style={styles.title}>러닝 캘린더</Text>
         <RunnerIcon style={styles.rightRunner} />
       </View>
     </View>
@@ -26,29 +23,18 @@ const RunnerIcon: React.FC<{ style?: any }> = ({ style }) => (
 const styles = StyleSheet.create({
   banner: {
     backgroundColor: '#2196F3',
-    paddingVertical: 20,
+    paddingVertical: 16,
     paddingHorizontal: 16,
-    marginBottom: 16,
   },
   content: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  textContainer: {
-    flex: 1,
-    marginHorizontal: 16,
-    alignItems: 'center',
-  },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#E3F2FD',
   },
   rightRunner: {
     transform: [{ scaleX: -1 }],
