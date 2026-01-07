@@ -45,14 +45,14 @@ export const AdBanner: React.FC = () => {
   // AdMob이 초기화되지 않았으면 로딩 표시
   if (!isInitialized) {
     return (
-      <View style={{ alignItems: 'center', marginVertical: 10, height: 50, backgroundColor: '#f0f0f0', justifyContent: 'center' }}>
-        <Text style={{ color: '#666' }}>AdMob 초기화 중...</Text>
+      <View style={{ alignItems: 'center', height: 50, backgroundColor: '#f5f5f5', justifyContent: 'center' }}>
+        <Text style={{ color: '#999' }}>광고 로딩 중...</Text>
       </View>
     );
   }
 
   return (
-    <View style={{ alignItems: 'center', marginVertical: 10, backgroundColor: '#e3f2fd', minHeight: 60, justifyContent: 'center' }}>
+    <View style={{ alignItems: 'center', backgroundColor: '#f5f5f5', minHeight: 60, justifyContent: 'center' }}>
       <BannerAd
         unitId={adUnitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
