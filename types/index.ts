@@ -22,3 +22,8 @@ export interface RunningEvent {
   dayOfWeek?: string;
   phone?: string;
 }
+
+// 리스트 아이템 타입 (이벤트 또는 광고)
+export type ListItem =
+  | { type: 'event'; data: RunningEvent }
+  | { type: 'ad'; id: string };

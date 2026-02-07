@@ -7,7 +7,9 @@ import { MonthFilter } from './components/MonthFilter';
 import { YearFilter } from './components/YearFilter';
 import { AdBanner } from './components/AdBanner';
 import { AppBanner } from './components/AppBanner';
-import { RunningEvent } from './types';
+import { NativeAdCard } from './components/NativeAdCard';
+import { AdProvider } from './contexts/AdContext';
+import { RunningEvent, ListItem } from './types';
 import { fetchMarathonEvents, transformMarathonToRunningEvent } from './services/marathonApi';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -101,6 +103,25 @@ export default function App() {
     });
   }, [allEvents, selectedYear, selectedMonth]);
 
+  // 이벤트 리스트에 광고 삽입 (5~10건 사이 랜덤 간격)
+  const listItems = useMemo((): ListItem[] => {
+    const items: ListItem[] = [];
+    let nextAdAt = Math.floor(Math.random() * 6) + 5; // 5~10 사이 랜덤
+    let eventCount = 0;
+
+    filteredEvents.forEach((event, index) => {
+      items.push({ type: 'event', data: event });
+      eventCount++;
+
+      if (eventCount === nextAdAt && index < filteredEvents.length - 1) {
+        items.push({ type: 'ad', id: `ad-${index}` });
+        eventCount = 0;
+        nextAdAt = Math.floor(Math.random() * 6) + 5;
+      }
+    });
+    return items;
+  }, [filteredEvents]);
+
   const handleYearSelect = (year: number) => {
     // 현재 연도의 선택 월 저장
     setMonthByYear(prev => ({ ...prev, [selectedYear]: selectedMonth }));
@@ -124,25 +145,26 @@ export default function App() {
   };
 
   const scrollToNearestEvent = () => {
-    if (filteredEvents.length === 0) return;
-    
+    if (listItems.length === 0) return;
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     let nearestIndex = 0;
     let minDiff = Infinity;
-    
-    filteredEvents.forEach((event, index) => {
-      const eventDate = new Date(event.date);
+
+    listItems.forEach((item, index) => {
+      if (item.type !== 'event') return;
+      const eventDate = new Date(item.data.date);
       eventDate.setHours(0, 0, 0, 0);
       const diff = Math.abs(eventDate.getTime() - today.getTime());
-      
+
       if (diff < minDiff) {
         minDiff = diff;
         nearestIndex = index;
       }
     });
-    
+
     setTimeout(() => {
       flatListRef.current?.scrollToIndex({
         index: nearestIndex,
@@ -246,83 +268,92 @@ export default function App() {
   });
 
   useEffect(() => {
-    if (filteredEvents.length > 0 && isInitialLoad) {
+    if (listItems.length > 0 && isInitialLoad) {
       scrollToNearestEvent();
       setIsInitialLoad(false);
     }
-  }, [filteredEvents, isInitialLoad]);
+  }, [listItems, isInitialLoad]);
 
-  const renderEventCard = ({ item }: { item: RunningEvent }) => (
-    <EventCard event={item} />
-  );
+  const renderListItem = ({ item }: { item: ListItem }) => {
+    if (item.type === 'ad') {
+      return <NativeAdCard />;
+    }
+    return <EventCard event={item.data} />;
+  };
 
   if (loading) {
     return (
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-          <AppBanner />
-          <View style={styles.centerContainer}>
-            <ActivityIndicator size="large" color="#2196F3" />
-            <Text style={styles.loadingText}>대회 정보를 불러오는 중...</Text>
-          </View>
-          <StatusBar style="auto" />
-        </SafeAreaView>
-      </SafeAreaProvider>
+      <AdProvider>
+        <SafeAreaProvider>
+          <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+            <AppBanner />
+            <View style={styles.centerContainer}>
+              <ActivityIndicator size="large" color="#2196F3" />
+              <Text style={styles.loadingText}>대회 정보를 불러오는 중...</Text>
+            </View>
+            <StatusBar style="auto" />
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </AdProvider>
     );
   }
 
   if (error) {
     return (
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-          <AppBanner />
-          <View style={styles.centerContainer}>
-            <Text style={styles.errorText}>{error}</Text>
-          </View>
-          <StatusBar style="auto" />
-        </SafeAreaView>
-      </SafeAreaProvider>
+      <AdProvider>
+        <SafeAreaProvider>
+          <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+            <AppBanner />
+            <View style={styles.centerContainer}>
+              <Text style={styles.errorText}>{error}</Text>
+            </View>
+            <StatusBar style="auto" />
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </AdProvider>
     );
   }
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-        <AppBanner />
-        <YearFilter
-          selectedYear={selectedYear}
-          onYearSelect={handleYearSelect}
-          availableYears={availableYears}
-        />
-        <MonthFilter
-          selectedMonth={selectedMonth}
-          onMonthSelect={setSelectedMonth}
-          availableMonths={availableMonths}
-        />
-        <View style={styles.listContainer} {...panResponder.panHandlers}>
-          <Animated.View 
-            style={[
-              styles.animatedContainer,
-              {
-                transform: [{ translateX: slideAnim }]
-              }
-            ]}
-          >
-            <FlatList
-              ref={flatListRef}
-              data={filteredEvents}
-              renderItem={renderEventCard}
-              keyExtractor={(item) => item.id}
-              style={styles.list}
-              showsVerticalScrollIndicator={false}
-              onScrollToIndexFailed={() => {}}
-            />
-          </Animated.View>
-        </View>
-        <AdBanner />
-        <StatusBar style="auto" />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <AdProvider>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+          <AppBanner />
+          <YearFilter
+            selectedYear={selectedYear}
+            onYearSelect={handleYearSelect}
+            availableYears={availableYears}
+          />
+          <MonthFilter
+            selectedMonth={selectedMonth}
+            onMonthSelect={setSelectedMonth}
+            availableMonths={availableMonths}
+          />
+          <View style={styles.listContainer} {...panResponder.panHandlers}>
+            <Animated.View
+              style={[
+                styles.animatedContainer,
+                {
+                  transform: [{ translateX: slideAnim }]
+                }
+              ]}
+            >
+              <FlatList
+                ref={flatListRef}
+                data={listItems}
+                renderItem={renderListItem}
+                keyExtractor={(item) => item.type === 'ad' ? item.id : item.data.id}
+                style={styles.list}
+                showsVerticalScrollIndicator={false}
+                onScrollToIndexFailed={() => {}}
+              />
+            </Animated.View>
+          </View>
+          <AdBanner />
+          <StatusBar style="auto" />
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </AdProvider>
   );
 }
 

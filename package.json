@@ -1,6 +1,6 @@
 {
   "name": "kr-running-schedule-app",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
@@ -16,7 +16,8 @@
     "react-native": "0.79.5",
     "react-native-google-mobile-ads": "^15.4.0",
     "react-native-safe-area-context": "^5.4.0",
-    "react-native-svg": "15.11.2"
+    "react-native-svg": "15.11.2",
+    "expo-tracking-transparency": "~5.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
