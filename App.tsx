@@ -12,6 +12,7 @@ import { AdBanner } from './components/AdBanner';
 import { AppBanner } from './components/AppBanner';
 import { NativeAdCard } from './components/NativeAdCard';
 import { EventDetailModal } from './components/EventDetailModal';
+import { SearchModal } from './components/SearchModal';
 import { BottomTabBar, TabType } from './components/BottomTabBar';
 import { UpcomingScreen } from './components/UpcomingScreen';
 import { ForceUpdateModal } from './components/ForceUpdateModal';
@@ -51,6 +52,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [selectedEvent, setSelectedEvent] = useState<RunningEvent | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [searchVisible, setSearchVisible] = useState(false);
   const [forceUpdateVisible, setForceUpdateVisible] = useState(false);
   const [forceUpdateUrl, setForceUpdateUrl] = useState('');
   const [forceUpdateMessage, setForceUpdateMessage] = useState<string | undefined>();
@@ -698,7 +700,7 @@ export default function App() {
     <AdProvider>
       <SafeAreaProvider>
         <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-          <AppBanner />
+          <AppBanner onSearchPress={() => setSearchVisible(true)} />
           {activeTab === 'home' ? (
             renderContent()
           ) : (
@@ -712,6 +714,12 @@ export default function App() {
             activeTab={activeTab}
             onTabChange={setActiveTab}
             upcomingCount={upcomingCount}
+          />
+          <SearchModal
+            visible={searchVisible}
+            allEvents={allEvents}
+            onClose={() => setSearchVisible(false)}
+            onEventPress={handleEventPress}
           />
           <EventDetailModal
             event={selectedEvent}
