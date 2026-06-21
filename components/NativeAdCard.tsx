@@ -27,17 +27,20 @@ export const NativeAdCard: React.FC<NativeAdCardProps> = ({ adUnitId }) => {
   const [nativeAd, setNativeAd] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-  const { canShowPersonalizedAds, isTrackingReady } = useAdContext();
+  const { canShowPersonalizedAds, isTrackingReady, isAdMobReady } = useAdContext();
 
   const unitId = adUnitId || (__DEV__ ? TestIds?.NATIVE : NATIVE_AD_UNIT_ID);
 
   useEffect(() => {
-    if (!NativeAd || !unitId || !isTrackingReady) {
-      if (!isTrackingReady) return;
+    if (!NativeAd || !unitId || !isTrackingReady || !isAdMobReady) {
+      if (!isTrackingReady || !isAdMobReady) return;
       setIsLoading(false);
       setError(true);
       return;
     }
+
+    let createdAd: any;
+    let cancelled = false;
 
     const loadAd = async () => {
       try {
@@ -45,25 +48,30 @@ export const NativeAdCard: React.FC<NativeAdCardProps> = ({ adUnitId }) => {
         const ad = await NativeAd.createForAdRequest(unitId, {
           requestNonPersonalizedAdsOnly: !canShowPersonalizedAds,
         });
+        // 이미 cleanup된 effect면 즉시 파기 (state 갱신 금지)
+        if (cancelled) {
+          ad?.destroy?.();
+          return;
+        }
+        createdAd = ad;
         setNativeAd(ad);
         setError(false);
-        console.log('Native ad loaded (personalized:', canShowPersonalizedAds, ')');
+        if (__DEV__) console.log('Native ad loaded (personalized:', canShowPersonalizedAds, ')');
       } catch (err) {
-        console.error('Native ad failed to load:', err);
-        setError(true);
+        if (__DEV__) console.error('Native ad failed to load:', err);
+        if (!cancelled) setError(true);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
 
     loadAd();
 
     return () => {
-      if (nativeAd?.destroy) {
-        nativeAd.destroy();
-      }
+      cancelled = true;
+      createdAd?.destroy?.();
     };
-  }, [unitId, isTrackingReady, canShowPersonalizedAds]);
+  }, [unitId, isTrackingReady, isAdMobReady, canShowPersonalizedAds]);
 
   if (!NativeAd || error || !nativeAd) {
     return null;
@@ -127,11 +135,11 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#F2F2F2',
   },
   adLabel: {
-    fontSize: 10,
-    color: '#999',
+    fontSize: 12,
+    color: '#767676',
     marginTop: 8,
     marginBottom: 4,
   },
@@ -146,9 +154,9 @@ const styles = StyleSheet.create({
   icon: {
     width: 40,
     height: 40,
-    borderRadius: 8,
+    borderRadius: 12,
     marginRight: 10,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#F2F2F2',
   },
   textArea: {
     flex: 1,
@@ -157,15 +165,15 @@ const styles = StyleSheet.create({
   headline: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: '#1A1A1A',
   },
   body: {
     fontSize: 12,
-    color: '#888',
+    color: '#767676',
     marginTop: 2,
   },
   ctaButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#1A1A1A',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 6,
@@ -178,7 +186,7 @@ const styles = StyleSheet.create({
   media: {
     width: '100%',
     height: 150,
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 8,
   },
 });

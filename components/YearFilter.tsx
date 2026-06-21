@@ -27,6 +27,9 @@ export const YearFilter: React.FC<YearFilterProps> = ({
               selectedYear === year && styles.selectedYearButton,
             ]}
             onPress={() => onYearSelect(year)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: selectedYear === year }}
+            accessibilityLabel={`${year}년`}
           >
             <Text
               style={[
@@ -45,34 +48,30 @@ export const YearFilter: React.FC<YearFilterProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    backgroundColor: '#FFFFFF',
+    paddingTop: 10,
+    paddingBottom: 4,
   },
   scrollContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
   },
   yearButton: {
     paddingHorizontal: 16,
-    paddingVertical: 6,
-    marginRight: 10,
-    borderRadius: 16,
-    backgroundColor: '#E3F2FD',
-    borderWidth: 1,
-    borderColor: '#BBDEFB',
+    paddingVertical: 8,
+    marginRight: 8,
+    borderRadius: 18,
+    backgroundColor: '#F2F2F2',
   },
   selectedYearButton: {
-    backgroundColor: '#1976D2',
-    borderColor: '#1976D2',
+    backgroundColor: '#1A1A1A',
   },
   yearText: {
     fontSize: 13,
-    color: '#1976D2',
+    color: '#666666',
     fontWeight: '500',
   },
   selectedYearText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
 });

@@ -1,5 +1,5 @@
 export interface MarathonEvent {
-  year: number;
+  year: number | string;
   date: string;
   month: number;
   day: number;
@@ -9,6 +9,18 @@ export interface MarathonEvent {
   location: string;
   organizer: string[];
   phone: string;
+  event_id?: string;
+  homepage?: string;
+  email?: string;
+  representative?: string;
+  start_time?: string;
+  region?: string;
+  registration_period?: string;
+  venue_detail?: string;
+  description?: string;
+  latitude?: number;
+  longitude?: number;
+  map_address?: string;
 }
 
 export interface RunningEvent {
@@ -21,6 +33,17 @@ export interface RunningEvent {
   location?: string;
   dayOfWeek?: string;
   phone?: string;
+  homepage?: string;
+  email?: string;
+  representative?: string;
+  startTime?: string;
+  region?: string;
+  registrationPeriod?: string;
+  venueDetail?: string;
+  description?: string;
+  latitude?: number;
+  longitude?: number;
+  mapAddress?: string;
 }
 
 // 리스트 아이템 타입 (이벤트 또는 광고)

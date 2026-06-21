@@ -2,7 +2,8 @@
   "expo": {
     "name": "러닝 캘린더",
     "slug": "kr-running-schedule-app",
-    "version": "1.4.0",
+    "scheme": "krrunningschedule",
+    "version": "1.7.0",
     "owner": "pilyeooong",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,28 +12,28 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#2196F3"
+      "backgroundColor": "#FFFFFF"
     },
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.pilyeooong.krrunningscheduleapp",
-      "buildNumber": "37",
+      "buildNumber": "46",
       "config": {
         "usesNonExemptEncryption": false,
         "googleMobileAdsAppId": "ca-app-pub-2370970221825852~4999430174"
       },
       "infoPlist": {
         "GADApplicationIdentifier": "ca-app-pub-2370970221825852~4999430174",
+        "GADDelayAppMeasurementInit": true,
         "NSUserTrackingUsageDescription": "맞춤형 광고를 제공하기 위해 사용자의 활동 정보를 사용합니다. 허용하지 않아도 앱 사용에는 문제가 없습니다.",
         "NSAppTransportSecurity": {
-          "NSAllowsArbitraryLoads": true,
           "NSAllowsLocalNetworking": true
         }
       }
     },
     "android": {
       "package": "com.pilyeooong.krrunningscheduleapp",
-      "versionCode": 12,
+      "versionCode": 14,
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-2370970221825852~8890573725"
       }

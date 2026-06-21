@@ -12,7 +12,7 @@ const MONTH_NAMES = [
   '7월', '8월', '9월', '10월', '11월', '12월'
 ];
 
-const BUTTON_WIDTH = 64; // 버튼 너비 + 마진
+const BUTTON_WIDTH = 58;
 
 export const MonthFilter: React.FC<MonthFilterProps> = ({
   selectedMonth,
@@ -52,6 +52,9 @@ export const MonthFilter: React.FC<MonthFilterProps> = ({
               selectedMonth === month && styles.selectedMonthButton,
             ]}
             onPress={() => onMonthSelect(month)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: selectedMonth === month }}
+            accessibilityLabel={`${MONTH_NAMES[month - 1]}`}
           >
             <Text
               style={[
@@ -70,34 +73,30 @@ export const MonthFilter: React.FC<MonthFilterProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    backgroundColor: '#FFFFFF',
+    paddingTop: 4,
+    paddingBottom: 6,
   },
   scrollContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
   },
   monthButton: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingVertical: 8,
-    marginRight: 12,
-    borderRadius: 20,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#ddd',
+    marginRight: 8,
+    borderRadius: 18,
+    backgroundColor: '#F2F2F2',
   },
   selectedMonthButton: {
-    backgroundColor: '#2196F3',
-    borderColor: '#2196F3',
+    backgroundColor: '#1A1A1A',
   },
   monthText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 13,
+    color: '#666666',
     fontWeight: '500',
   },
   selectedMonthText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
 });
