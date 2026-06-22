@@ -2,7 +2,6 @@
   "expo": {
     "name": "러닝 캘린더",
     "slug": "kr-running-schedule-app",
-    "scheme": "krrunningschedule",
     "version": "1.7.0",
     "owner": "pilyeooong",
     "orientation": "portrait",
