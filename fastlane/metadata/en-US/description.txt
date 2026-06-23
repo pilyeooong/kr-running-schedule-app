@@ -1,0 +1,8 @@
+Running Calendar is the easiest way to find marathon and running races across Korea.
+
+• Search: quickly find races by name, region, or venue
+• Registration status: see races open now or opening soon
+• Smart filters: by month, region, distance (full, half, 10K, 5K, ultra, trail), and registration status
+• Details: schedule, venue, registration period, organizer, contact, and map for each event
+
+Stay updated with real-time race schedules nationwide. Perfect for marathon runners, running clubs, and anyone preparing for their next race in Korea.

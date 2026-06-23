@@ -1,0 +1,1 @@
+marathon,running,race,korea,10k,halfmarathon,fullmarathon,schedule,registration,search,run,event

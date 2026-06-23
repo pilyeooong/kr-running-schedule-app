@@ -1,0 +1,6 @@
+What's New
+
+• Search: quickly find races by name, region, or venue
+• Registration tab: see races open now or opening soon
+• Filter by region, distance, and registration status
+• Stability and performance improvements
