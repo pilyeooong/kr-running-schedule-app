@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"set -a && source asc/.env && set +a && cd kr-running-schedule-app && bundle exec fastlane pull_store 2>&1 | tail -60\",\"timeout\":180000,\"description\":\"Retry pull_store with absolute key pat...",
+  "error": "Exit code 127\n(eval):source:1: no such file or directory: asc/.env",
+  "timestamp": "2026-04-05T04:57:22.046Z",
+  "retry_count": 1
+}

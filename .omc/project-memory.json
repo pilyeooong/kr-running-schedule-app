@@ -1,0 +1,346 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1781931346795,
+  "projectRoot": "/Users/heopil-yeong/Documents/pilyeooong-lab/kr-running-schedule-app",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "19.2.0",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "cd /Users/heopil-yeong/Documents/pilyeooong-lab/kr-running-schedule-app\nnpx tsc --noEmit && echo \"tsc OK\" || { echo \"TSC FAIL\"; exit 1; }\ngit add App.tsx components/AppBanner.tsx components/SearchModal.tsx components/Dropdown.tsx utils/search.ts\necho \"=== STAGED ===\" && git status --short | grep -E \"^[MAD]\"\ngit commit -m \"$(cat <<'EOF'\nfeat(search): 전체 대회 검색 + 필터(지난 대회 포함/정렬)\n\n- 헤더 검색 아이콘 → 전체화면 검색 모달(SearchModal)\n- 대회명·지역·장소·주최·거리·설명 대상 토큰 AND 부분일치 검색(utils/search.ts)\n- 필터바(항상 노출, 확장 가능 구조): '지난 대회 포함' 체크박스(기본 제외), 정렬 드롭다운(가까운/먼 날짜순)\n- 재사용 가능한 제네릭 Dropdown 컴포넌트 추가\n- 검색 모달 내 SafeAreaProvider 중첩으로 안전영역 침범 수정\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>\nEOF\n)\"\necho \"---\" && git log --oneline -3",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run start",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo run:android",
+      "ios": "expo run:ios",
+      "web": "expo start --web"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "assets",
+      "components",
+      "scripts"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "android": {
+      "path": "android",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1781931346674,
+      "keyFiles": [
+        "build.gradle",
+        "gradle.properties",
+        "gradlew",
+        "gradlew.bat",
+        "settings.gradle"
+      ]
+    },
+    "assets": {
+      "path": "assets",
+      "purpose": "Static assets",
+      "fileCount": 17,
+      "lastAccessed": 1781931346675,
+      "keyFiles": [
+        "adaptive-icon.png",
+        "appstore-6.5-01.png",
+        "appstore-6.5-02.png",
+        "appstore-6.5-03.png",
+        "appstore-6.5-04.png"
+      ]
+    },
+    "claudedocs": {
+      "path": "claudedocs",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1781931346681,
+      "keyFiles": [
+        "tistory-blog-post.md"
+      ]
+    },
+    "components": {
+      "path": "components",
+      "purpose": "UI components",
+      "fileCount": 13,
+      "lastAccessed": 1781931346682,
+      "keyFiles": [
+        "AdBanner.tsx",
+        "AppBanner.tsx",
+        "BottomTabBar.tsx",
+        "DistanceFilter.tsx",
+        "EventCard.tsx"
+      ]
+    },
+    "contexts": {
+      "path": "contexts",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1781931346683,
+      "keyFiles": [
+        "AdContext.tsx"
+      ]
+    },
+    "data": {
+      "path": "data",
+      "purpose": "Data files",
+      "fileCount": 1,
+      "lastAccessed": 1781931346685,
+      "keyFiles": [
+        "events.ts"
+      ]
+    },
+    "fastlane": {
+      "path": "fastlane",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1781931346688,
+      "keyFiles": [
+        "Appfile",
+        "Fastfile",
+        "README.md",
+        "report.xml"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 2,
+      "lastAccessed": 1781931346690,
+      "keyFiles": [
+        "convert-icon.js",
+        "generate-icon.js"
+      ]
+    },
+    "services": {
+      "path": "services",
+      "purpose": "Business logic services",
+      "fileCount": 1,
+      "lastAccessed": 1781931346690,
+      "keyFiles": [
+        "marathonApi.ts"
+      ]
+    },
+    "types": {
+      "path": "types",
+      "purpose": "Type definitions",
+      "fileCount": 1,
+      "lastAccessed": 1781931346690,
+      "keyFiles": [
+        "index.ts"
+      ]
+    },
+    "utils": {
+      "path": "utils",
+      "purpose": "Utility functions",
+      "fileCount": 3,
+      "lastAccessed": 1781931346691,
+      "keyFiles": [
+        "distanceCategory.ts",
+        "registrationStatus.ts",
+        "versionCheck.ts"
+      ]
+    },
+    "android/app": {
+      "path": "android/app",
+      "purpose": "Application code",
+      "fileCount": 3,
+      "lastAccessed": 1781931346691,
+      "keyFiles": [
+        "build.gradle",
+        "debug.keystore",
+        "proguard-rules.pro"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "App.tsx",
+      "accessCount": 13,
+      "lastAccessed": 1782009841930,
+      "type": "file"
+    },
+    {
+      "path": "components/SearchModal.tsx",
+      "accessCount": 11,
+      "lastAccessed": 1782014180325,
+      "type": "file"
+    },
+    {
+      "path": "app.json",
+      "accessCount": 7,
+      "lastAccessed": 1782094071373,
+      "type": "file"
+    },
+    {
+      "path": "components/AdBanner.tsx",
+      "accessCount": 6,
+      "lastAccessed": 1781931891921,
+      "type": "file"
+    },
+    {
+      "path": "components/UpcomingScreen.tsx",
+      "accessCount": 4,
+      "lastAccessed": 1781931975239,
+      "type": "file"
+    },
+    {
+      "path": "components/NativeAdCard.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1781931866563,
+      "type": "file"
+    },
+    {
+      "path": "components/AppBanner.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1782009820292,
+      "type": "file"
+    },
+    {
+      "path": "utils/search.ts",
+      "accessCount": 2,
+      "lastAccessed": 1782014021647,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 2,
+      "lastAccessed": 1782094086684,
+      "type": "file"
+    },
+    {
+      "path": "services/marathonApi.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781931397754,
+      "type": "file"
+    },
+    {
+      "path": "utils/registrationStatus.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781931402229,
+      "type": "file"
+    },
+    {
+      "path": "utils/versionCheck.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781931403601,
+      "type": "file"
+    },
+    {
+      "path": "types/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781931403997,
+      "type": "file"
+    },
+    {
+      "path": "contexts/AdContext.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931404951,
+      "type": "file"
+    },
+    {
+      "path": "data/events.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781931405161,
+      "type": "file"
+    },
+    {
+      "path": "components/EventDetailModal.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931410200,
+      "type": "file"
+    },
+    {
+      "path": "components/EventCard.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931410662,
+      "type": "file"
+    },
+    {
+      "path": "components/BottomTabBar.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931416984,
+      "type": "file"
+    },
+    {
+      "path": "components/MonthFilter.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931417460,
+      "type": "file"
+    },
+    {
+      "path": "components/RegionFilter.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931418325,
+      "type": "file"
+    },
+    {
+      "path": "components/ForceUpdateModal.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931429137,
+      "type": "file"
+    },
+    {
+      "path": "components/YearFilter.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1781931429566,
+      "type": "file"
+    },
+    {
+      "path": "utils/regions.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781931850117,
+      "type": "file"
+    },
+    {
+      "path": "utils/listItems.ts",
+      "accessCount": 1,
+      "lastAccessed": 1781931856928,
+      "type": "file"
+    },
+    {
+      "path": "components/Dropdown.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1782014038699,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

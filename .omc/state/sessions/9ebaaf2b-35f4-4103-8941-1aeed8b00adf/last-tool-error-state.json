@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd /Users/heopil-yeong/Documents/pilyeooong-lab/kr-marathon-schedule\\npython3 - <<'PY'\\nimport scrap\\n\\nURL = \\\"http://www.roadrun.co.kr/schedule/list.php\\\"\\nHEADERS = {\\\"User-Agent\\\": \\\"M...",
+  "error": "Exit code 1\n  File \"<stdin>\", line 33\n    print(f\"  {e['event_name'][:22):<24} venue={v!r}\" if False else f\"  {e['event_name'][:24]:<26} venue={v!r}\")\n                                                      ^^\nSyntaxError: f-string: closing parenthesis ')' does not match opening parenthesis '['",
+  "timestamp": "2026-06-20T05:17:06.803Z",
+  "retry_count": 1
+}
